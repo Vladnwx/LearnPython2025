@@ -46,7 +46,7 @@ class Queue:
         добавление элемента val в конец списка
         """
         tempNode = Node(val)
-        print(f"Элемент {val} создан новый узел")
+        #print(f"Элемент {val} создан новый узел")
 
         if self.start == None:
             print("Очередь пустая")
@@ -69,29 +69,38 @@ class Queue:
         elif self.start == None:
             self.push(val)
             return
+        elif n == 1:
+            tempNode = Node(val)
+            #print(f"Элемент {val} создан новый узел")
+            # Поиск элемента куда нужно вставить              
+            tmp = self.start #Сохраняем указатель на следующий элемент
+            self.start = tempNode # Найденному элементу присваиваем указатель на следующий элемент -> tempNode
+            tempNode.nref = tmp # tempNode указывает на следующий элемент
         else:
             count = 1
             current = self.start
             while current != None:
                 current = current.nref
                 count += 1
-            if n >= count-1:
+            if n >= count - 1:
                 print(
                     "Номер элемента для вставки больше размера очериди и будет помещен в конец очереди"
                 )
                 self.push(val)
             else:
                 tempNode = Node(val)
-                print(f"Элемент {val} создан новый узел")
-                ptr =self.start
-                i=0
-                while i < n:
-                    ptr = ptr.nref
+                #print(f"Элемент {val} создан новый узел")
+                # Поиск элемента куда нужно вставить
+                ptr = self.start  # указатель на начало очереди
+                i = 1  # текущий элемент
+                while i < n-1:  # Ищем элемент n-1
+                    ptr = ptr.nref  # Переходим по списку на следующий элемент
                     i += 1
-                self.end.nref = tempNode
-                tempNode.pref = ptr.end
-                ptr.end = tempNode
-            
+                
+                tmp = ptr.nref #Сохраняем указатель на следующий элемент
+                ptr.nref = tempNode # Найденному элементу присваиваем указатель на следующий элемент -> tempNode
+                tempNode.nref = tmp # tempNode указывает на следующий элемент
+                tempNode.pref = ptr # tempNode указывает на предыдущий элемент
 
     def print(self):
         print("Печать содержимого очереди")
@@ -112,7 +121,9 @@ def test():
     queue.print()
     queue.pop()
     queue.print()
-    queue.insert(1, 4)
+    queue.push(4)
+    queue.push(5)
+    queue.insert(42, 6)
     queue.print()
 
 
