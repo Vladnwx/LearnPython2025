@@ -63,7 +63,35 @@ class Queue:
         """
         вставить элемент val между элементами с номерами n-1 и n
         """
-        pass
+        if n <= 0:
+            print("Номер элемента для вставки должен быть больше нуля")
+            return None
+        elif self.start == None:
+            self.push(val)
+            return
+        else:
+            count = 1
+            current = self.start
+            while current != None:
+                current = current.nref
+                count += 1
+            if n >= count-1:
+                print(
+                    "Номер элемента для вставки больше размера очериди и будет помещен в конец очереди"
+                )
+                self.push(val)
+            else:
+                tempNode = Node(val)
+                print(f"Элемент {val} создан новый узел")
+                ptr =self.start
+                i=0
+                while i < n:
+                    ptr = ptr.nref
+                    i += 1
+                self.end.nref = tempNode
+                tempNode.pref = ptr.end
+                ptr.end = tempNode
+            
 
     def print(self):
         print("Печать содержимого очереди")
@@ -83,6 +111,8 @@ def test():
     queue.push(3)
     queue.print()
     queue.pop()
+    queue.print()
+    queue.insert(1, 4)
     queue.print()
 
 
